@@ -16,8 +16,8 @@ namespace BlazingPizza.Shared
             Longitude = longitude;
         }
 
-        public double Latitude { get; }
-        public double Longitude { get; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
 
         public static LatLong Interpolate(LatLong start, LatLong end, double proportion)
         {
