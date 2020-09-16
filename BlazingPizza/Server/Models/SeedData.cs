@@ -69,7 +69,7 @@ namespace BlazingPizza.Server.Models
                     ImageUrl = "images/pizzas/margherita.jpg"
                 }
             };
-            /*
+            
             var toppings = new Topping[]
             {
                 new Topping
@@ -178,8 +178,8 @@ namespace BlazingPizza.Server.Models
                     Price = 47.50m
                 },
             };
-            */
-            //context.Toppings.AddRange(toppings);
+            
+            context.Toppings.AddRange(toppings);
             context.Specials.AddRange(specials);
             context.SaveChanges();
         }
