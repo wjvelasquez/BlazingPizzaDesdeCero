@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -17,5 +18,8 @@ namespace BlazingPizza.Shared
             Pizzas.Sum(p => p.GetTotalPrice());
         public string GetFormattedTotalPrice() =>
             GetTotalPrice().ToString("0.00");
+
+        public string GetFormattedCreateTime() =>
+            CreatedTime.ToString("D", new CultureInfo("es"));
     }
 }

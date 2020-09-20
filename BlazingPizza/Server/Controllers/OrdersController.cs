@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BlazingPizza.Server.Controllers
 {
-    [Route("Orders")]
+    [Route("orders")]
     [ApiController]
     public class OrdersController : ControllerBase
     {
@@ -44,19 +44,40 @@ namespace BlazingPizza.Server.Controllers
             return order.OrderId;
         }
 
-        //[HttpGet]
-        //public async Task<ActionResult<List<OrderWithStatus>>> GetOrders()
-        //{
-        //    var orders = await _context.Orders
-        //        .Include(o => o.DeliveryLocation)
-        //        .Include(o => o.Pizzas).ThenInclude(p => p.Special)
-        //        .Include(o => o.Pizzas).ThenInclude(p => p.Toppings)
-        //        .ThenInclude(t => t.Topping)
-        //        .OrderByDescending(o => o.CreatedTime)
-        //        .ToListAsync();
+        [HttpGet]
+        public async Task<ActionResult<List<OrderWithStatus>>> GetOrders()
+        {
+            var orders = await _context.Orders
+                .Include(o => o.DeliveryLocation)
+                .Include(o => o.Pizzas).ThenInclude(p => p.Special)
+                .Include(o => o.Pizzas).ThenInclude(p => p.Toppings)
+                .ThenInclude(t => t.Topping)
+                .OrderByDescending(o => o.CreatedTime)
+                .ToListAsync();
 
-        //    return orders.Select(
-        //        o => OrderWithStatus.FromOrders(o)).ToList();
-        //}
+            return orders.Select(
+                o => OrderWithStatus.FromOrder(o)).ToList();
+        }
+
+        [HttpGet("{orderId}")]
+        public async Task<ActionResult<OrderWithStatus>> GetOrderWithStatus(int orderId)
+        {
+            var order = await _context.Orders
+                .Where(o => o.OrderId == orderId)
+                .Include(o => o.DeliveryLocation)
+                .Include(o => o.Pizzas).ThenInclude(p => p.Special)
+                .Include(o => o.Pizzas).ThenInclude(p => p.Toppings)
+                .ThenInclude(t => t.Topping)
+                .SingleOrDefaultAsync();
+
+            if (order==null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return OrderWithStatus.FromOrder(order);
+            }
+        } 
     }
 }

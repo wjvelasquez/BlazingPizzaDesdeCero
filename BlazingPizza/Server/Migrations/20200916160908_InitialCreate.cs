@@ -63,7 +63,9 @@ namespace BlazingPizza.Server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: true),
                     CreatedTime = table.Column<DateTime>(nullable: false),
-                    DeliveryAddressId = table.Column<int>(nullable: true)
+                    DeliveryAddressId = table.Column<int>(nullable: true),
+                    DeliveryLocation_Latitude = table.Column<double>(nullable: true),
+                    DeliveryLocation_Longitude = table.Column<double>(nullable: true)
                 },
                 constraints: table =>
                 {

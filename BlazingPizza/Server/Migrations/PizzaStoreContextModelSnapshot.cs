@@ -167,6 +167,12 @@ namespace BlazingPizza.Server.Migrations
                                 .HasColumnType("int")
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                            b1.Property<double>("Latitude")
+                                .HasColumnType("float");
+
+                            b1.Property<double>("Longitude")
+                                .HasColumnType("float");
+
                             b1.HasKey("OrderId");
 
                             b1.ToTable("Orders");

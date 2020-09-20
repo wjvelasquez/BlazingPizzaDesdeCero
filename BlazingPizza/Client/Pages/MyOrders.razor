@@ -1,0 +1,51 @@
+﻿@page "/myorders"
+
+@inject HttpClient HttpClient
+
+<div class="main">
+    @if (_ordersWithStatus == null)
+    {
+    <div class="loading-bar"></div>
+    }
+    else if (!_ordersWithStatus.Any())
+    {
+        <h2>No hay ordenes</h2>
+        <a class="btn btn-success" href="">Ordene alguna pizza</a>
+    }
+    else
+    {
+        <div class="list-group orders-list">
+            @foreach (var item in _ordersWithStatus)
+            {
+                <div class="list-group-item">
+                    <div class="col">
+                        @*<h5>@item.Order.CreatedTime.ToLongDateString()</h5>*@
+                        <h5>@item.Order.GetFormattedCreateTime()</h5>
+                        Items:
+                        <strong>@item.Order.Pizzas.Count()</strong>;
+                        Total price:
+                        <strong>$@item.Order.GetFormattedTotalPrice()</strong>
+                    </div>
+                    <div class="col">
+                        Status: <strong>@item.StatusText</strong>
+                    </div>
+                    <div class="col text-right">
+                        <a href="myorders/@item.Order.OrderId" class="btn btn-success">
+                            Rastrear &gt;
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    IEnumerable<OrderWithStatus> _ordersWithStatus;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _ordersWithStatus = await HttpClient.GetFromJsonAsync<List<OrderWithStatus>>("orders");
+    }
+
+}
