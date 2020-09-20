@@ -1,0 +1,45 @@
+﻿@page "/checkout"
+
+@inject OrderState OrderState
+@inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
+
+<div class="main">
+    <EditForm Model="OrderState.Order.DeliveryAddress"
+              OnValidSubmit="PlaceOrder">
+        <div class="checkout-cols">
+            <div class="checkout-order-details">
+                <h4>Revisar la orden</h4>
+                <OrderReview Order="OrderState.Order" />
+            </div>
+            <div class="checkout-delivery-address">
+                <h4>Enviar a...</h4>
+                <AddressEditor Address="OrderState.Order.DeliveryAddress" />
+            </div>
+        </div>
+        @*en mi experiencia solo con eliminar el @OnClick basta
+            no hace falta type="submit"*@
+        <button type="submit" class="checkout-button btn btn-warning"
+                disabled ="@isSubmitting">
+            Aceptar la orden
+        </button>
+        <DataAnnotationsValidator />
+    </EditForm>
+</div>
+
+@code {
+    public bool isSubmitting { get; set; } = false;
+
+    async Task PlaceOrder()
+    {
+        isSubmitting = true;
+        var response =
+        await HttpClient.PostAsJsonAsync("orders", OrderState.Order);
+        var newOrderId =
+            await response.Content.ReadFromJsonAsync<int>();
+        OrderState.ResetOrder();
+
+        isSubmitting = false;
+        NavigationManager.NavigateTo($"myorders/{newOrderId}");
+    }
+}
