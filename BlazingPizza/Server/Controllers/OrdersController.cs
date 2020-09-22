@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BlazingPizza.Server.Models;
 using BlazingPizza.Shared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ namespace BlazingPizza.Server.Controllers
 {
     [Route("orders")]
     [ApiController]
+    [Authorize]
     public class OrdersController : ControllerBase
     {
         private readonly PizzaStoreContext _context;
