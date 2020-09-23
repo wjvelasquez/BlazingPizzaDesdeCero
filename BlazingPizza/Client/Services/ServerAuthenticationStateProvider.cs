@@ -31,7 +31,10 @@ namespace BlazingPizza.Client.Services
 
             var _identity = _userInfo.IsAuthenticated
                 ? new ClaimsIdentity(
-                    new[] { new Claim(ClaimTypes.Name,_userInfo.Name)}, "serverauth")
+                    new[] 
+                    { 
+                        new Claim(ClaimTypes.Name,_userInfo.Name)
+                    }, "serverauth")
                 : new ClaimsIdentity();
             
             return new AuthenticationState(new ClaimsPrincipal(_identity));

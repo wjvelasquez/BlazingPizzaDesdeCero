@@ -23,6 +23,7 @@ namespace BlazingPizza.Client
                 sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddScoped<OrderState>();
 
+            //add for auth
             builder.Services.AddOptions();
             builder.Services.AddAuthorizationCore();
             builder.Services.AddScoped<AuthenticationStateProvider,

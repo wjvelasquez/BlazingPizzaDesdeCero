@@ -42,9 +42,10 @@ namespace BlazingPizza.Server
                 .AddCookie()
                 .AddTwitter(twitterOptions => 
                 {
-                    //twitterOptions.ConsumerKey = "U9DbAaVcDPYO3RVFlDo4w";
-                    twitterOptions.ConsumerKey = "U9DbAaVcDPYO3RVFlDo4w";
-                    twitterOptions.ConsumerSecret = "l6HWZa8FSMJmbBkGSzL6gMjgZMererT5KROxAzws9o";
+                    var twk = Configuration.GetValue<string>("TwitterWV:APIkey");
+                    var tws = Configuration.GetValue<string>("TwitterWV:APIkeySecret");
+                    twitterOptions.ConsumerKey = twk;
+                    twitterOptions.ConsumerSecret = tws;
                     twitterOptions.Events.OnRemoteFailure = (context) =>
                     {
                         context.HandleResponse();

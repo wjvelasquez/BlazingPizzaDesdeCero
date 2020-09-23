@@ -6,7 +6,7 @@ using BlazingPizza.Shared;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Twitter;
-using Microsoft.AspNetCore.Http;
+//using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlazingPizza.Server.Controllers
@@ -14,7 +14,8 @@ namespace BlazingPizza.Server.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private static UserInfo _loggedOutUser = new UserInfo { IsAuthenticated = false };
+        private static UserInfo _loggedOutUser = 
+            new UserInfo { IsAuthenticated = false };
 
         [HttpGet("user")]
         public UserInfo GetUser()
@@ -31,9 +32,9 @@ namespace BlazingPizza.Server.Controllers
             {
                 redirectUri = "/";
             }
-
+            
             await HttpContext.ChallengeAsync(
-                TwitterDefaults.AuthenticationScheme,
+                TwitterDefaults.AuthenticationScheme, 
                 new AuthenticationProperties
                 {
                     RedirectUri = redirectUri

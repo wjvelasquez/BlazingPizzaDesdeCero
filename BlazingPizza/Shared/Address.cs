@@ -8,7 +8,7 @@ namespace BlazingPizza.Shared
     public class Address
     {
         public int Id { get; set; }
-        [Required(ErrorMessage ="El Nombre es requerido"),
+        [Required(ErrorMessage ="El campo nombre es requerido"),
             MaxLength(100)]
         public string Name { get; set; }
         [Required(ErrorMessage ="Complete la direccion"),
