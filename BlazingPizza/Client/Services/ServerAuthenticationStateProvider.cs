@@ -22,7 +22,7 @@ namespace BlazingPizza.Client.Services
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             /*
-             //para probar
+             //para probar en el cliente sin auttenticar en el servidor
             var _claim = new Claim(ClaimTypes.Name, "Usuario Falso");
             var _identity = new ClaimsIdentity(new[] { _claim }, "serverauth");
             */

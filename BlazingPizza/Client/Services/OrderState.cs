@@ -47,5 +47,9 @@ namespace BlazingPizza.Client.Services
         {
             Order = new Order();
         }
+        public void ReplaceOrder(Order order)
+        {
+            Order = order;
+        }
     }
 }
