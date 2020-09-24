@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using BlazingPizza.Server.Models;
 using BlazingPizza.Shared;
@@ -29,7 +30,8 @@ namespace BlazingPizza.Server.Controllers
             order.CreatedTime = DateTime.Now;
             order.DeliveryLocation =
                 new LatLong(19.723510, -63.256936);
-
+            order.UserId = Helpers.User.GetUserId(HttpContext);
+            
             foreach (var pizza in order.Pizzas)
             {
                 pizza.SpecialId = pizza.Special.Id;
@@ -50,6 +52,7 @@ namespace BlazingPizza.Server.Controllers
         public async Task<ActionResult<List<OrderWithStatus>>> GetOrders()
         {
             var orders = await _context.Orders
+                .Where(o => o.UserId == Helpers.User.GetUserId(HttpContext))
                 .Include(o => o.DeliveryLocation)
                 .Include(o => o.Pizzas).ThenInclude(p => p.Special)
                 .Include(o => o.Pizzas).ThenInclude(p => p.Toppings)
@@ -65,6 +68,7 @@ namespace BlazingPizza.Server.Controllers
         public async Task<ActionResult<OrderWithStatus>> GetOrderWithStatus(int orderId)
         {
             var order = await _context.Orders
+                .Where(o => o.UserId == Helpers.User.GetUserId(HttpContext))
                 .Where(o => o.OrderId == orderId)
                 .Include(o => o.DeliveryLocation)
                 .Include(o => o.Pizzas).ThenInclude(p => p.Special)
@@ -80,6 +84,6 @@ namespace BlazingPizza.Server.Controllers
             {
                 return OrderWithStatus.FromOrder(order);
             }
-        } 
+        }         
     }
 }
