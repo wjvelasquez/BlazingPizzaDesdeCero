@@ -29,8 +29,10 @@ namespace BlazingPizza.Server.Controllers
         {
             order.CreatedTime = DateTime.Now;
             order.DeliveryLocation =
-                new LatLong(19.723510, -63.256936);
+                new LatLong(9.72348, -63.25693); // 19.723510, -63.256936);
             order.UserId = Helpers.User.GetUserId(HttpContext);
+
+            var alg = Helpers.User.GetUserEmail(HttpContext);
             
             foreach (var pizza in order.Pizzas)
             {

@@ -10,6 +10,7 @@ body {
     font-family: 'quicksand';
     overflow-y: hidden;
 }
+track-order-map
 
 form {
     width: 100%;
@@ -525,7 +526,7 @@ form {
         text-transform: uppercase;
     }
 
-.track-order-body {
+.track-order-body {    
     flex-grow: 1;
     display: flex;
 }
@@ -537,7 +538,7 @@ form {
 }
 
 .track-order-map {
-    width: 350px;
+    width: 50%;
     flex-shrink: 0;
 }
 

@@ -3,6 +3,7 @@
 @inject HttpClient HttpClient
 @inject OrderState OrderState
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime 
 
 <div class="main">
     @if (_specials is null)
@@ -38,7 +39,7 @@
             {
                 <ConfiguredPizzaItem Pizza="configuredPizza"
                                      OnRemoved="@(() =>
-                                        OrderState.RemoveConfiguredPizza(configuredPizza))" />
+                                        removePizza(configuredPizza))" />
             }
         </div>
     }
@@ -75,6 +76,14 @@
         _specials = await HttpClient.GetFromJsonAsync<List<PizzaSpecial>>("specials");
     }
 
+    async Task removePizza(Pizza pizza)
+    {
+        if (await JSRuntime.Confirm(
+            $"¿Eliminar la pizza \"{pizza.Special.Name}\" de la orden?"
+            ))
+        {
+            OrderState.RemoveConfiguredPizza(pizza);
+        }
+    }
 
-    
 }

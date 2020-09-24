@@ -10,8 +10,10 @@ namespace BlazingPizza.Server.Helpers
     public static class User
     {
         
-        public static string GetUserId(HttpContext context) => context.User.FindFirst(ClaimTypes.Name)?.Value;
+        public static string GetUserId(HttpContext context) => 
+            context.User.FindFirst(ClaimTypes.Name)?.Value;
 
-        public static string GetUserEmail(HttpContext httpContext) => ClaimTypes.Email;
+        public static string GetUserEmail(HttpContext Context) => 
+            Context.User.FindFirst(ClaimTypes.Email)?.Value;
     }
 }
