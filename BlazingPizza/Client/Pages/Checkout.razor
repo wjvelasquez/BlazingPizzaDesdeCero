@@ -46,18 +46,18 @@
         var authState = await AuthenticationStateTask;
         if (!authState.User.Identity.IsAuthenticated)
         {
-            await LocalStorage.SetAsync(JSRuntime, _current, _orderState.Order);
+            await IJSRuntimeExtension.SetAsync(JSRuntime, _current, _orderState.Order);
             NavigationManager.NavigateTo(
                 "user/signin?redirectUri=/checkout",true
                 );
         }
         if (!_orderState.Order.Pizzas.Any())
         {
-            Order savedOrder = await LocalStorage.GetAsync<Order>(JSRuntime, _current);
+            Order savedOrder = await IJSRuntimeExtension.GetAsync<Order>(JSRuntime, _current);
             if (savedOrder != null)
             {
                 _orderState.ReplaceOrder(savedOrder);
-                await LocalStorage.DeleteAsync(JSRuntime, _current);
+                await IJSRuntimeExtension.DeleteAsync(JSRuntime, _current);
             }
             else
             {
